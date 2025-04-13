@@ -1,0 +1,36 @@
+{
+  "name": "evc04-billing",
+  "version": "1.0.0",
+  "description": "utility to create bills from evc04 charging log",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "npx vite",
+    "generate": "ts-node ./src/generate.tsx"
+  },
+  "author": "sfrey",
+  "license": "ISC",
+  "dependencies": {
+    "@react-pdf/renderer": "^4.3.0",
+    "@types/react-dom": "^19.1.2",
+    "csv-parser": "^3.2.0",
+    "date-fns": "^4.1.0",
+    "react-dom": "^19.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.27.0",
+    "@babel/core": "^7.26.10",
+    "@babel/node": "^7.26.0",
+    "@babel/plugin-transform-runtime": "^7.26.10",
+    "@babel/preset-react": "^7.26.3",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.1",
+    "@vitejs/plugin-react-swc": "^3.8.1",
+    "i": "^0.3.7",
+    "nodemon": "^3.1.9",
+    "npm": "^11.3.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.6"
+  }
+}
