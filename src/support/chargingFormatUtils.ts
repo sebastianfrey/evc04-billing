@@ -11,7 +11,3 @@ export function formatEnergy(energy: number) {
 export function formatPrice(price: number, unit = '€') {
   return `${(Math.round(price * 100 ) / 100).toFixed(2)} ${unit}`
 }
-
-export function calculatePrice(units: number, pricePerUnit: number) {
-  return (units * pricePerUnit) / 100
-}

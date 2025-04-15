@@ -1,21 +1,18 @@
 import { Page, Document, StyleSheet, View, Text } from "@react-pdf/renderer";
-import { ChargingSession } from "../models/chargingCore";
+import { ChargingInfo, ChargingSession } from "../models/chargingCore";
 import { Table } from "./table/Table";
 import { TableHeader } from "./table/TableHeader";
 import { TableCell } from "./table/TableCell";
 import { TableBody } from "./table/TableBody";
 import { TableRow } from "./table/TableRow";
 import { format } from "date-fns";
-import {
-  calculatePrice,
-  formatEnergy,
-  formatPrice,
-} from "./support/chargingUtils";
+import { formatEnergy, formatPrice } from "../support/chargingFormatUtils";
+import { calculatePrice } from "../support/chargingCalcUtils";
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: "column",
-    backgroundColor: "#E4E4E4",
+    backgroundColor: "white",
   },
   section: {
     margin: 10,
@@ -25,14 +22,18 @@ const styles = StyleSheet.create({
 });
 
 export interface ChargingBillProps {
-  sessions: ChargingSession[];
-  netPrice: number;
-  grossPrice: number;
+  chargingInfo: ChargingInfo;
 }
 
 // Create Document Component
 export const ChargingBill = (props: ChargingBillProps) => {
-  const { sessions, netPrice, grossPrice } = props;
+  const { chargingInfo } = props;
+
+  const title = chargingInfo.title;
+  const sessions = chargingInfo.sessions;
+  const netPrice = chargingInfo.electricity.netPrice;
+  const grossPrice = chargingInfo.electricity.grossPrice;
+
   const totalEnergySum = sessions.reduce(
     (sum, session) => sum + session.totalEnergy,
     0
@@ -45,35 +46,41 @@ export const ChargingBill = (props: ChargingBillProps) => {
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
           <Text style={{ fontSize: 16, marginBottom: 20 }}>
-            Ladekostenabrechnung für April 2024
+            {title}
           </Text>
           <Table style={{ marginBottom: 20 }}>
             <TableBody>
               <TableRow>
-                <TableCell style={{ width: 150, fontWeight: 'bold' }}>Wallbox</TableCell>
+                <TableCell style={{ width: 150, fontWeight: "bold" }}>
+                  Wallbox
+                </TableCell>
+                <TableCell style={{ width: 200 }}></TableCell>
+                <TableCell style={{ width: 150, fontWeight: "bold" }}>
+                  Strompreis
+                </TableCell>
+                <TableCell style={{ flexGrow: 1 }}></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 150 }}>Name</TableCell>
-                <TableCell>E.ON Drive vBox smart view</TableCell>
+                <TableCell style={{ width: 200 }}>
+                  {chargingInfo.wallbox.name}
+                </TableCell>
+                <TableCell style={{ width: 100 }}>Netto</TableCell>
+                <TableCell>{formatPrice(netPrice, "€/kWh")}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 150 }}>Hersteller</TableCell>
-                <TableCell>Vestel</TableCell>
+                <TableCell style={{ width: 200 }}>
+                  {chargingInfo.wallbox.manufacturer}
+                </TableCell>
+                <TableCell style={{ width: 100 }}>Brutto</TableCell>
+                <TableCell>{formatPrice(grossPrice, "€/kWh")}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 150 }}>Modellbezeichnung</TableCell>
-                <TableCell>EVC04-E11-WDM-S</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell style={{ width: 150, fontWeight: 'bold', marginTop: 20 }}>Strompreis</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell style={{ width: 150 }}>netto</TableCell>
-                <TableCell>{formatPrice(netPrice / 100, "€/kWh")}</TableCell>
-              </TableRow>
-              <TableRow>
-                <TableCell style={{ width: 150 }}>brutto</TableCell>
-                <TableCell>{formatPrice(grossPrice / 100, "€/kWh")}</TableCell>
+                <TableCell style={{ width: 200 }}>
+                  {chargingInfo.wallbox.typeName}
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>

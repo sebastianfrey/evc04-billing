@@ -51,3 +51,21 @@ export const ChargingSessionSchema = z
   }));
 
 export type ChargingSession = z.infer<typeof ChargingSessionSchema>;
+
+export const ChargingInfoSchema = z.object({
+  title: z.string(),
+  wallbox: z.object({
+    name: z.string().default(""),
+    manufacturer: z.string().default(""),
+    typeName: z.string().default(""),
+  }),
+  electricity: z.object({
+    netPrice: z.number().default(0.2605),
+    grossPrice: z.number().default(0.3099),
+  }),
+  allSessions: z.array(ChargingSessionSchema).nullable().default(null),
+  sessions: z.array(ChargingSessionSchema).default([]),
+  filters: z.any(),
+});
+
+export type ChargingInfo = z.infer<typeof ChargingInfoSchema>
