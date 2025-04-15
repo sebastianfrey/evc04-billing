@@ -4,6 +4,13 @@ import { FilterMatchMode } from "primereact/api";
 
 const defaultValues: ChargingInfo = {
   title: 'Ladevorgänge vom 01.04.2024 - 30.04.2024',
+  address: {
+    name: 'Sebastian Frey',
+    street: 'Wöllingerstraße',
+    houseNumber: '26',
+    zipCode: '85643',
+    city: 'Steinhöring',
+  },
   wallbox: {
     name: "E.ON Drive vBox smart view",
     manufacturer: "Vestel",

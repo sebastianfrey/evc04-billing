@@ -30,6 +30,7 @@ export const ChargingBill = (props: ChargingBillProps) => {
   const { chargingInfo } = props;
 
   const title = chargingInfo.title;
+  const address = chargingInfo.address;
   const sessions = chargingInfo.sessions;
   const netPrice = chargingInfo.electricity.netPrice;
   const grossPrice = chargingInfo.electricity.grossPrice;
@@ -45,42 +46,68 @@ export const ChargingBill = (props: ChargingBillProps) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.section}>
-          <Text style={{ fontSize: 16, marginBottom: 20 }}>
-            {title}
-          </Text>
+          <Text style={{ fontSize: 16, marginBottom: 20 }}>{title}</Text>
+          <Table style={{ marginBottom: 20 }}>
+            <TableBody>
+              <TableRow>
+                <TableCell style={{ width: 350 }}></TableCell>
+                <TableCell style={{ width: 200, fontWeight: "bold" }}>
+                  Adresse
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{ width: 350 }}></TableCell>
+                <TableCell>{address.name}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{ width: 350 }}></TableCell>
+                <TableCell>
+                  {`${address.street} ${address.houseNumber}`}
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{ width: 350 }}></TableCell>
+                <TableCell>{`${address.zipCode} ${address.city}`}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
           <Table style={{ marginBottom: 20 }}>
             <TableBody>
               <TableRow>
                 <TableCell style={{ width: 150, fontWeight: "bold" }}>
                   Wallbox
                 </TableCell>
-                <TableCell style={{ width: 200 }}></TableCell>
-                <TableCell style={{ width: 150, fontWeight: "bold" }}>
-                  Strompreis
-                </TableCell>
-                <TableCell style={{ flexGrow: 1 }}></TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 150 }}>Name</TableCell>
                 <TableCell style={{ width: 200 }}>
                   {chargingInfo.wallbox.name}
                 </TableCell>
-                <TableCell style={{ width: 100 }}>Netto</TableCell>
-                <TableCell>{formatPrice(netPrice, "€/kWh")}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 150 }}>Hersteller</TableCell>
                 <TableCell style={{ width: 200 }}>
                   {chargingInfo.wallbox.manufacturer}
                 </TableCell>
-                <TableCell style={{ width: 100 }}>Brutto</TableCell>
-                <TableCell>{formatPrice(grossPrice, "€/kWh")}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell style={{ width: 150 }}>Modellbezeichnung</TableCell>
                 <TableCell style={{ width: 200 }}>
                   {chargingInfo.wallbox.typeName}
                 </TableCell>
+              </TableRow>
+              <TableRow style={{ marginTop: 10 }}>
+                <TableCell style={{ width: 150, fontWeight: "bold" }}>
+                  Strompreis
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{ width: 150 }}>Netto</TableCell>
+                <TableCell>{formatPrice(netPrice, "€/kWh")}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell style={{ width: 150 }}>Brutto</TableCell>
+                <TableCell>{formatPrice(grossPrice, "€/kWh")}</TableCell>
               </TableRow>
             </TableBody>
           </Table>

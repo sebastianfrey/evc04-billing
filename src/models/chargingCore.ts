@@ -54,6 +54,13 @@ export type ChargingSession = z.infer<typeof ChargingSessionSchema>;
 
 export const ChargingInfoSchema = z.object({
   title: z.string(),
+  address: z.object({
+    name: z.string(),
+    street: z.string(),
+    houseNumber: z.string(),
+    zipCode: z.string(),
+    city: z.string(),
+  }),
   wallbox: z.object({
     name: z.string().default(""),
     manufacturer: z.string().default(""),
