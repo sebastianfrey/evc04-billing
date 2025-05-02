@@ -1,15 +1,17 @@
 import { useForm } from "@tanstack/react-form";
 import { ChargingInfo } from "../models/chargingCore";
-import { FilterMatchMode } from "primereact/api";
+
+const today = new Date();
 
 const defaultValues: ChargingInfo = {
-  title: 'Ladevorgänge vom 01.04.2024 - 30.04.2024',
+  invoiceMonth: today,
+  rfid: '',
   address: {
-    name: 'Sebastian Frey',
-    street: 'Wöllingerstraße',
-    houseNumber: '26',
-    zipCode: '85643',
-    city: 'Steinhöring',
+    name: "Sebastian Frey",
+    street: "Wöllingerstraße",
+    houseNumber: "26",
+    zipCode: "85643",
+    city: "Steinhöring",
   },
   wallbox: {
     name: "E.ON Drive vBox smart view",
@@ -17,16 +19,12 @@ const defaultValues: ChargingInfo = {
     typeName: "EVC04-E11-WDM-S",
   },
   electricity: {
-    grossPrice: 0.31,
-    netPrice: 0.26,
+    grossPrice: 35.55,
+    netPrice: 29.87,
   },
   allSessions: null,
+  allRfids: null,
   sessions: [],
-  filters: {
-    cardId: { value: null, matchMode: FilterMatchMode.CONTAINS },
-    startTime: { value: null, matchMode: FilterMatchMode.DATE_AFTER },
-    stopTime: { value: null, matchMode: FilterMatchMode.DATE_BEFORE },
-  },
 };
 
 export function useChargingForm() {
@@ -37,4 +35,4 @@ export function useChargingForm() {
   return form;
 }
 
-export type UseChargingForm = ReturnType<typeof useChargingForm>;
+export type ChargingFormApi = ReturnType<typeof useChargingForm>;

@@ -1,6 +1,6 @@
 import fs from "fs";
 import csv from "csv-parser";
-import { ChargingBill } from "./components/ChargingBill";
+import { ChargingInvoice } from "./pdf/ChargingInvoice";
 import { renderToFile } from "@react-pdf/renderer";
 import { ChargingSession, ChargingSessionSchema } from "./models/chargingCore";
 
@@ -36,7 +36,7 @@ function loadChargingSessions(filePath: string) {
 loadChargingSessions("./data/FullSessionLogs.csv").then((sessions) => {
   console.info(sessions);
   return renderToFile(
-    <ChargingBill sessions={sessions} netPrice={26.05} grossPrice={30.99} />,
+    <ChargingInvoice sessions={sessions} netPrice={26.05} grossPrice={30.99} />,
     `bill.pdf`
   );
 });

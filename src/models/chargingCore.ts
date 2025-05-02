@@ -52,8 +52,14 @@ export const ChargingSessionSchema = z
 
 export type ChargingSession = z.infer<typeof ChargingSessionSchema>;
 
+export const ChargingRfidSchema = z.object({
+  value: z.string(),
+  label: z.string(),
+});
+
+export type ChargingRfid = z.infer<typeof ChargingRfidSchema>;
+
 export const ChargingInfoSchema = z.object({
-  title: z.string(),
   address: z.object({
     name: z.string(),
     street: z.string(),
@@ -71,8 +77,11 @@ export const ChargingInfoSchema = z.object({
     grossPrice: z.number().default(0.3099),
   }),
   allSessions: z.array(ChargingSessionSchema).nullable().default(null),
+  allRfids: z.array(ChargingRfidSchema).nullable().default(null),
   sessions: z.array(ChargingSessionSchema).default([]),
   filters: z.any(),
+  invoiceMonth: z.date().default(() => new Date()),
+  rfid: z.string().default(""),
 });
 
 export type ChargingInfo = z.infer<typeof ChargingInfoSchema>

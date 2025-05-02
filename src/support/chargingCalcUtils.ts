@@ -1,3 +1,3 @@
 export function calculatePrice(units: number, pricePerUnit: number) {
-  return units * pricePerUnit;
+  return units * pricePerUnit / 100;
 }

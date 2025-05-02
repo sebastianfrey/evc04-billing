@@ -5,12 +5,13 @@ import sample from "./data/sample.sessions.json";
 
 import ReactDOM from "react-dom/client";
 import { PDFViewer } from "@react-pdf/renderer";
-import { ChargingBill } from "./components/ChargingBill";
+import { ChargingInvoice } from "./pdf/ChargingInvoice";
 import { ChargingSession, ChargingSessionSchema } from "./models/chargingCore";
 import { PrimeReactProvider } from "primereact/api";
 import { ChargingForm } from "./components/ChargingForm";
 import { Splitter, SplitterPanel } from "primereact/splitter";
 import { useChargingForm } from "./hooks/useChargingForm";
+import { Message } from "primereact/message";
 
 const sessions = sample.sessions.map((session) => ({
   ...session,
@@ -29,11 +30,18 @@ export function App() {
         </SplitterPanel>
         <SplitterPanel className="flex align-items-center justify-content-center">
           <chargingForm.Subscribe
-            children={(state) => (
-              <PDFViewer width="100%" height="100%" style={{ border: 0 }} key={JSON.stringify(state.values)}>
-                <ChargingBill chargingInfo={state.values} />
-              </PDFViewer>
-            )}
+            children={(state) =>
+              state.values.allSessions !== null ? (
+                <PDFViewer
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  key={JSON.stringify(state.values)}
+                >
+                  <ChargingInvoice chargingInfo={state.values} />
+                </PDFViewer>
+              ) : <Message severity="info" text="Bitte Ladeprotokoll hochladen"></Message>
+            }
           ></chargingForm.Subscribe>
         </SplitterPanel>
       </Splitter>
