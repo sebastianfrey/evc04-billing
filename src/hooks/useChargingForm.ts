@@ -19,8 +19,8 @@ const defaultValues: ChargingInfo = {
     typeName: "EVC04-E11-WDM-S",
   },
   electricity: {
-    grossPrice: 35.55,
-    netPrice: 29.87,
+    grossPrice: 30.17,
+    netPrice: 25.35,
   },
   allSessions: null,
   allRfids: null,

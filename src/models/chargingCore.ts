@@ -73,8 +73,8 @@ export const ChargingInfoSchema = z.object({
     typeName: z.string().default(""),
   }),
   electricity: z.object({
-    netPrice: z.number().default(0.2605),
-    grossPrice: z.number().default(0.3099),
+    netPrice: z.number().default(25.35),
+    grossPrice: z.number().default(30.17),
   }),
   allSessions: z.array(ChargingSessionSchema).nullable().default(null),
   allRfids: z.array(ChargingRfidSchema).nullable().default(null),
